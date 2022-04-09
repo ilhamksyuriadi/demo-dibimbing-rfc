@@ -1,0 +1,35 @@
+.add-todo-container {
+    background-color: white;
+    border-radius: 10px;
+    width: 600px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.add-todo-title {
+    padding: 10px;
+}
+
+.add-todo-description {
+    padding: 10px;
+}
+
+.add-todo-button {
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 16px;
+    color: rgb(15, 15, 87);
+    border: 1px solid rgb(15, 15, 87);
+    background-color: white;
+    transition: 0.3s;
+}
+
+.add-todo-button:hover {
+    cursor: pointer;
+    background-color: rgb(15, 15, 87);
+    border: 1px solid rgb(15, 15, 87);
+    color: white;
+}
