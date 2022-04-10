@@ -22,6 +22,26 @@ h2 {
     margin-bottom: 10px;
 }
 
+h2 span {
+    margin: 0px;
+    background-color: rgb(98, 112, 163);
+    padding: 2px;
+    color: white;
+    font-size: 16px;
+}
+
 p {
     margin: 0px;
+}
+
+.note-container {
+    background-color: rgb(98, 112, 163);
+    padding: 6px;
+    color: white;
+    border-radius: 10px;
+}
+
+.card-button {
+    width: 80px;
+    height: 30px;
 }
