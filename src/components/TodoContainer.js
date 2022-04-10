@@ -4,13 +4,30 @@ import AddTodo from './AddTodo'
 import TodoCard from './TodoCard'
 
 const TodoContainer = () => {
-    const [todoList, setTodoList] = useState([])
+    const [todoList, setTodoList] = useState([
+        {
+            index: 0,
+            title: 'Learn Javscript',
+            description: 'using javascript to code',
+            priority: 'High',
+            note: 'this is important on of part of frontend',
+        },
+        {
+            index: 1,
+            title: 'Learn Frontend',
+            description: 'using react for create frontend pages',
+            priority: 'Medium',
+            note: 'this is important on of part of web development',
+        }
+    ])
 
     const handleAddTodo = (newTodo) => {
         const tempNewTodo = {
             index: todoList.length + 1,
             title: newTodo.title,
-            description: newTodo.description
+            description: newTodo.description,
+            note: newTodo.note,
+            priority: newTodo.priority
         }
         setTodoList([...todoList, tempNewTodo])
     }
