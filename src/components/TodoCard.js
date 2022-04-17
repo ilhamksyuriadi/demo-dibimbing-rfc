@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import './TodoCard.css'
 
-const TodoCard = ({ todo, handleRemoveTodo, handleEditTodo }) => {
+const TodoCard = ({ todo, handleDeleteTodo, handleEditTodo }) => {
     const [isEdit, setIsEdit] = useState(false)
 
     // for edit
-    const [todoIndex, setTodoIndex] = useState(-1)
     const [todoTitle, setTodoTitle] = useState('')
     const [todoDescription, setTodoDescription] = useState('')
     const [todoPriority, setTodoPriority] = useState('High')
     const [todoNote, setTodoNote] = useState('')
 
     useEffect(() => {
-        setTodoIndex(todo.index)
         setTodoTitle(todo.title)
         setTodoDescription(todo.description)
         setTodoPriority(todo.priority)
         setTodoNote(todo.note)
     }, [todo])
 
-    const handleRemove = () => {
-        handleRemoveTodo(todo.index)
+    const handleDelete = () => {
+        handleDeleteTodo(todo)
     }
 
     const handleEdit = () => {
@@ -59,7 +57,7 @@ const TodoCard = ({ todo, handleRemoveTodo, handleEditTodo }) => {
         e.preventDefault()
         if (handleValidation()) {
             const newTodo = {
-                index: todoIndex,
+                id: todo.id,
                 title: todoTitle,
                 description: todoDescription,
                 priority: todoPriority,
@@ -116,7 +114,7 @@ const TodoCard = ({ todo, handleRemoveTodo, handleEditTodo }) => {
                             <code>notes: {todo.note}</code>
                         </div>
                     </div>
-                    <button className='card-button' onClick={handleRemove}>Delete</button>
+                    <button className='card-button' onClick={handleDelete}>Delete</button>
                     <button className='card-button' onClick={handleEdit}>Edit</button>
                 </>
             }

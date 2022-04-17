@@ -1,48 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './TodoContainer.css'
 import AddTodo from './AddTodo'
 import TodoCard from './TodoCard'
+import axios from 'axios'
 
 const TodoContainer = () => {
-    const [todoList, setTodoList] = useState([
-        {
-            index: 0,
-            title: 'Learn Reactjs',
-            description: 'how to code in reactjs',
-            priority: 'Medium',
-            note: 'no note.'
+    const [todoList, setTodoList] = useState([])
+
+    useEffect(() => {
+        updateTodo()
+    },[])
+
+    const updateTodo = () => {
+        const accessToken = localStorage.getItem('accessToken')
+        const config = {
+            headers: {
+                authorization: accessToken
+            }
         }
-    ])
+        axios.get('http://localhost:3100/todos/', config).then(response => {
+            if (response.data.length > 0) {
+                setTodoList(response.data)
+            }
+        }).catch((error) => {
+            //error handle here
+            alert("Error:", error)
+        })
+    }
 
     const handleAddTodo = (newTodo) => {
-        const tempNewTodo = {
-            index: todoList.length,
-            title: newTodo.title,
-            description: newTodo.description,
-            priority: newTodo.priority,
-            note: newTodo.note
-        }
-        setTodoList([...todoList, tempNewTodo])
+        axios.post('http://localhost:3100/todos/',newTodo).then(() => {
+            updateTodo()
+        }).catch((error) => {
+            //error handle here
+            alert("Error:", error)
+        })
     }
 
     const handleEditTodo = (editedTodo) => {
-        console.log('edit todo', editedTodo)
-        const newTodoList = todoList.splice(editedTodo.index, 1, editedTodo)
-        console.log('newTodoList',newTodoList)
-        console.log('todoList',todoList)
-        setTodoList([...newTodoList])
+        axios.put(`http://localhost:3100/todos/${editedTodo.id}`, editedTodo).then(() => {
+            updateTodo()
+        }).catch((error) => {
+            //error handle here
+            alert("Error:", error)
+        })
     }
 
-    const handleRemoveTodo = (index) => {
-        const newTodoList = todoList.filter(todo => todo.index !== index)
-        setTodoList(newTodoList)
+    const handleDeleteTodo = (todo) => {
+        axios.delete(`http://localhost:3100/todos/${todo.id}`).then(() => {
+            updateTodo();
+        })
+        .catch((error) => {
+            //error handle here
+            alert("Error:", error)
+        })
     }
 
     return (
         <section>
             <AddTodo handleAddTodo={handleAddTodo} />
             {todoList.map((todo,index) => {
-                return <TodoCard  key={index} todo={todo} handleRemoveTodo={handleRemoveTodo} handleEditTodo={handleEditTodo} />
+                return <TodoCard  key={index} todo={todo} handleDeleteTodo={handleDeleteTodo} handleEditTodo={handleEditTodo} />
             })}
         </section>
     )
